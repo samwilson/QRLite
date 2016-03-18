@@ -65,7 +65,7 @@ class QRLiteFunctions {
 				QRcode::png($content, $tmpfname, $eccLevel, $size, $margin);
 				$pngContent = file_get_contents($tmpfname);
 				unlink($tmpfname);
-				$image = '<img src="data:image/png;base64,' . base64_encode($pngContent) . '" alt="' . $content . '">';
+				$image = '<img src="data:image/png;base64,' . base64_encode($pngContent) . '" alt="' . $content . '" title="' . $content . '">';
 			}
 		} catch (Exception $e) {
 			$image = '<span class="error-message">' . $e->getMessage() . '</span>'; ;
