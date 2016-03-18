@@ -1,5 +1,5 @@
 # QRLite
-IDProvider is a MediaWiki extension that displays QR Codes in SVG or PNG format.
+QRLite is a MediaWiki extension that displays QR Codes in SVG or PNG format.
 The extension is very lightweight, as it does not upload or manage the images within MediaWiki.
 
 ## Documentation
