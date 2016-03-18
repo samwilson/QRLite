@@ -1,5 +1,5 @@
-# IDProvider
-IDProvider is an extension to MediaWiki that provides (unique) IDs using different ID algorithms.
+# QRLite
+IDProvider is a MediaWiki extension that displays QR Codes without having to generate MediaWiki Images
 
 ## Documentation
-* The official documenentation can be found at [mediawiki.org/wiki/Extension:IDProvider](https://www.mediawiki.org/wiki/Extension:IDProvider)
+* The official documenentation can be found at [mediawiki.org/wiki/Extension:QRLite](https://www.mediawiki.org/wiki/Extension:QRLite)
