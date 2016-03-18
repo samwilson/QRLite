@@ -187,7 +187,7 @@
                 
             $output .= 
             '<defs>'."\n".
-            '<rect id="p" width="'.$pixelPerPoint.'" height="'.$pixelPerPoint.'" />'."\n".
+            '<rect id="p" width="'.$pixelPerPoint.'" height="'.$pixelPerPoint.'" style="stroke-width: ' . $pixelPerPoint / 20 . '; stroke:rgb(0,0,0);" />'."\n".
             '</defs>'."\n".
             '<g fill="#'.str_pad(dechex($fore_color), 6, "0", STR_PAD_LEFT).'">'."\n";
                 

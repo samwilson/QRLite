@@ -1,4 +1,7 @@
 <?php
+
+require_once "lib/phpqrcode/qrlib.php";
+
 /**
  * The actual QRLite Functions
  *
@@ -22,7 +25,7 @@ class QRLiteFunctions {
 	 */
 	public static function generateQRCode($params = array()) {
 
-		include "lib/phpqrcode/qrlib.php";
+
 
 		// Defaults and escaping
 		$content = self::paramGet($params, 'prefix', '___MAIN___');
@@ -32,29 +35,44 @@ class QRLiteFunctions {
 		$size = self::paramGet($params, 'size', 6);
 		$margin = self::paramGet($params, 'margin', 0);
 
+		$ecc = self::paramGet($params, 'ecc', 2);
+
+		// TODO: Doesn't seem to work
+		$eccLevel = QR_ECLEVEL_M;
+		if ($ecc === 1) {
+			$eccLevel = QR_ECLEVEL_L;
+		} else if ($ecc === 2) {
+			$eccLevel = QR_ECLEVEL_M;
+		} else if ($ecc === 3) {
+			$eccLevel = QR_ECLEVEL_Q;
+		} else if ($ecc === 4) {
+			$eccLevel = QR_ECLEVEL_H;
+		}
+
         $image = '';
 
+		try {
+			if ($format === 'svg') {
+				// Create a temporary svg file, as the library would otherwise print the result to the page itself
+				$tmpfname = tempnam("/tmp", "SVGLite_") . '.svg';
+				QRcode::svg($content, $tmpfname, $eccLevel, $size, $margin);
+				$svgContent = file_get_contents($tmpfname);
 
-        if ($format === 'svg') {
-            // Create a temporary svg file, as the library would otherwise print the result to the page itself
-            $tmpfname = tempnam("/tmp", "SVGLite_") . '.svg';
-            QRcode::svg($content, $tmpfname, QR_ECLEVEL_M, $size, $margin);
-            $svgContent = file_get_contents($tmpfname);
-            unlink($tmpfname);
-            $image = '<div class="svg-container" title="' . $content . '">' . $svgContent . '</div>';
-        } else if ($format === 'png') {
-            $tmpfname = tempnam("/tmp", "SVGLite_") . '.png';
-            QRcode::png($content, $tmpfname, QR_ECLEVEL_M, $size, $margin);
-            $pngContent = file_get_contents($tmpfname);
-            unlink($tmpfname);
-            $image = '<img src="" alt="Smiley face" height="42" width="42">';
-        }
-
-
+				unlink($tmpfname);
+				$image = '<span class="svg-container" title="' . $content . '">' . $svgContent . '</span>';
+			} else if ($format === 'png') {
+				$tmpfname = tempnam("/tmp", "SVGLite_") . '.png';
+				QRcode::png($content, $tmpfname, $eccLevel, $size, $margin);
+				$pngContent = file_get_contents($tmpfname);
+				unlink($tmpfname);
+				$image = '<img src="data:image/png;base64,' . base64_encode($pngContent) . '" alt="' . $content . '">';
+			}
+		} catch (Exception $e) {
+			$image = '<span class="error-message">' . $e->getMessage() . '</span>'; ;
+		}
 
         $downloadButtons = '';
-		$result = '<div class="qrlite-result">' . $image . $downloadButtons . '</div>';
-
+		$result = '<span class="qrlite-result">' . $image . $downloadButtons . '</span>';
 
 		return $result;
 	}
