@@ -1,0 +1,35 @@
+{
+    "name": "QRLite",
+    "version": "0.1.0",
+    "author": [
+        "Simon Heimler"
+    ],
+    "url": "https://github.com/gesinn-it/QRLite",
+    "descriptionmsg": "idprovider-desc",
+    "license-name": "MIT",
+    "type": "other",
+
+    "APIModules": {
+        "qrlite": "QRLiteApi"
+    },
+
+    "AutoloadClasses": {
+        "QRLiteHooks": "QRLite.hooks.php",
+        "QRLiteFunctions": "QRLite.functions.php",
+        "QRLiteApi": "api/QRLiteApi.php"
+    },
+    "ExtensionMessagesFiles": {
+        "QRLiteMagic": "QRLite.i18n.magic.php"
+    },
+    "MessagesDirs": {
+        "QRLite": [
+            "i18n"
+        ]
+    },
+
+    "Hooks": {
+        "ParserFirstCallInit": [
+          "QRLiteHooks::onParserFirstCallInit"
+        ]
+	}
+}
