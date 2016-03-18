@@ -6,7 +6,7 @@
     ],
     "url": "https://github.com/gesinn-it/QRLite",
     "descriptionmsg": "idprovider-desc",
-    "license-name": "MIT",
+    "license-name": "GPL",
     "type": "other",
 
     "APIModules": {
