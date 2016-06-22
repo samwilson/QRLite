@@ -14,6 +14,12 @@
  * @license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
  */
 
+// Don't run in CLI mode (maintainence scripts)
+if (php_sapi_name() == "cli") {
+	return false;
+	wfDebugLog('QRLite', "[QRLite] Skipping in CLI Mode");
+}
+
 
 if (function_exists('wfLoadExtension')) {
 
