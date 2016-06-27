@@ -25,7 +25,7 @@ class QRLiteFunctions {
 	 */
 	public static function generateQRCode($params = array()) {
 
-
+		global $wgTmpDirectory;
 
 		// Defaults and escaping
 		$content = self::paramGet($params, 'prefix', '___MAIN___');
@@ -54,17 +54,21 @@ class QRLiteFunctions {
 		try {
 			if ($format === 'svg') {
 				// Create a temporary svg file, as the library would otherwise print the result to the page itself
-				$tmpfname = tempnam("/tmp", "SVGLite_") . '.svg';
-				QRcode::svg($content, $tmpfname, $eccLevel, $size, $margin);
-				$svgContent = file_get_contents($tmpfname);
+				$tempFileName = tempnam($wgTmpDirectory, "SVGLite_") . '.svg';
+				QRcode::svg($content, $tempFileName, $eccLevel, $size, $margin);
+				$svgContent = file_get_contents($tempFileName);
 
-				unlink($tmpfname);
+				unlink($tempFileName);
 				$image = '<span class="svg-container" title="' . $content . '">' . $svgContent . '</span>';
 			} else if ($format === 'png') {
-				$tmpfname = tempnam("/tmp", "SVGLite_") . '.png';
-				QRcode::png($content, $tmpfname, $eccLevel, $size, $margin);
-				$pngContent = file_get_contents($tmpfname);
-				unlink($tmpfname);
+				$tempFileName = tempnam($wgTmpDirectory, "SVGLite_") . '.png';
+				QRcode::png($content, $tempFileName, $eccLevel, $size, $margin);
+				$pngContent = file_get_contents($tempFileName);
+
+				// Delete temporary files
+				foreach (glob($wgTmpDirectory . "/SVGLite_*") as $filename) {
+					unlink($filename);
+				}
 				$image = '<img src="data:image/png;base64,' . base64_encode($pngContent) . '" alt="' . $content . '" title="' . $content . '">';
 			}
 		} catch (Exception $e) {
