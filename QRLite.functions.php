@@ -30,7 +30,7 @@ class QRLiteFunctions {
 		// Defaults and escaping
 		$content = self::paramGet($params, 'prefix', '___MAIN___');
 
-		$format = self::paramGet($params, 'format', 'svg');
+		$format = self::paramGet($params, 'format', 'png');
 
 		$size = self::paramGet($params, 'size', 6);
 		$margin = self::paramGet($params, 'margin', 0);
