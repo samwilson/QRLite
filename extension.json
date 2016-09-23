@@ -15,8 +15,7 @@
 
     "AutoloadClasses": {
         "QRLiteHooks": "QRLite.hooks.php",
-        "QRLiteFunctions": "QRLite.functions.php",
-        "QRLiteApi": "api/QRLiteApi.php"
+        "QRLiteFunctions": "QRLite.functions.php"
     },
     "ExtensionMessagesFiles": {
         "QRLiteMagic": "QRLite.i18n.magic.php"
