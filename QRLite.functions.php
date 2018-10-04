@@ -13,69 +13,70 @@ require_once "lib/phpqrcode/qrlib.php";
  */
 class QRLiteFunctions {
 
-
-	/**
-	 * Corresponds to the QRLite-increment API usage
-	 *
-	 * @param array $params	Associative array. See the API / Parser function for usage
-	 *
-	 * @return string|int
-	 *
-	 * @throws Exception
-	 */
-	public static function generateQRCode($params = array()) {
+	public static function generateQRCode( $params = [] ) {
 
 		global $wgTmpDirectory;
 
 		// Defaults and escaping
-		$content = self::paramGet($params, 'prefix', '___MAIN___');
+		$content = self::paramGet( $params, 'prefix', '___MAIN___' );
 
-		$format = self::paramGet($params, 'format', 'png');
+		$format = self::paramGet( $params, 'format', 'png' );
 
-		$size = self::paramGet($params, 'size', 6);
-		$margin = self::paramGet($params, 'margin', 0);
+		$size = self::paramGet( $params, 'size', 6 );
+		$margin = self::paramGet( $params, 'margin', 0 );
 
-		$ecc = self::paramGet($params, 'ecc', 2);
+		$ecc = self::paramGet( $params, 'ecc', 2 );
 
 		// TODO: Doesn't seem to work
 		$eccLevel = QR_ECLEVEL_M;
-		if ($ecc === 1) {
+		if ( $ecc === 1 ) {
 			$eccLevel = QR_ECLEVEL_L;
-		} else if ($ecc === 2) {
-			$eccLevel = QR_ECLEVEL_M;
-		} else if ($ecc === 3) {
-			$eccLevel = QR_ECLEVEL_Q;
-		} else if ($ecc === 4) {
-			$eccLevel = QR_ECLEVEL_H;
+		} else {
+			if ( $ecc === 2 ) {
+				$eccLevel = QR_ECLEVEL_M;
+			} else {
+				if ( $ecc === 3 ) {
+					$eccLevel = QR_ECLEVEL_Q;
+				} else {
+					if ( $ecc === 4 ) {
+						$eccLevel = QR_ECLEVEL_H;
+					}
+				}
+			}
 		}
 
-        $image = '';
+		$image = '';
 
 		try {
-			if ($format === 'svg') {
+			if ( $format === 'svg' ) {
 				// Create a temporary svg file, as the library would otherwise print the result to the page itself
-				$tempFileName = tempnam($wgTmpDirectory, "SVGLite_") . '.svg';
-				QRcode::svg($content, $tempFileName, $eccLevel, $size, $margin);
-				$svgContent = file_get_contents($tempFileName);
+				$tempFileName = tempnam( $wgTmpDirectory, "SVGLite_" ) . '.svg';
+				QRcode::svg( $content, $tempFileName, $eccLevel, $size, $margin );
+				$svgContent = file_get_contents( $tempFileName );
 
-				unlink($tempFileName);
+				unlink( $tempFileName );
 				$image = '<span class="svg-container" title="' . $content . '">' . $svgContent . '</span>';
-			} else if ($format === 'png') {
-				$tempFileName = tempnam($wgTmpDirectory, "SVGLite_") . '.png';
-				QRcode::png($content, $tempFileName, $eccLevel, $size, $margin);
-				$pngContent = file_get_contents($tempFileName);
+			} else {
+				if ( $format === 'png' ) {
+					$tempFileName = tempnam( $wgTmpDirectory, "SVGLite_" ) . '.png';
+					QRcode::png( $content, $tempFileName, $eccLevel, $size, $margin );
+					$pngContent = file_get_contents( $tempFileName );
 
-				// Delete temporary files
-				foreach (glob($wgTmpDirectory . "/SVGLite_*") as $filename) {
-					unlink($filename);
+					// Delete temporary files
+					foreach ( glob( $wgTmpDirectory . "/SVGLite_*" ) as $filename ) {
+						unlink( $filename );
+					}
+					$image =
+						'<img src="data:image/png;base64,' . base64_encode( $pngContent ) . '" alt="' . $content .
+						'" title="' . $content . '">';
 				}
-				$image = '<img src="data:image/png;base64,' . base64_encode($pngContent) . '" alt="' . $content . '" title="' . $content . '">';
 			}
-		} catch (Exception $e) {
-			$image = '<span class="error-message">' . $e->getMessage() . '</span>'; ;
+		}
+		catch ( Exception $e ) {
+			$image = '<span class="error-message">' . $e->getMessage() . '</span>';;
 		}
 
-        $downloadButtons = '';
+		$downloadButtons = '';
 		$result = '<span class="qrlite-result">' . $image . $downloadButtons . '</span>';
 
 		return $result;
@@ -84,8 +85,8 @@ class QRLiteFunctions {
 
 
 	//////////////////////////////////////////
-    // HELPER FUNCTIONS                     //
-    //////////////////////////////////////////
+	// HELPER FUNCTIONS                     //
+	//////////////////////////////////////////
 
 	/**
 	 * Helper function, that safely checks whether an array key exists
@@ -97,9 +98,9 @@ class QRLiteFunctions {
 	 *
 	 * @return mixed
 	 */
-	public static function paramGet($params, $key, $default = null) {
-		if (isset($params[$key])) {
-			return trim($params[$key]);
+	public static function paramGet( $params, $key, $default = null ) {
+		if ( isset( $params[$key] ) ) {
+			return trim( $params[$key] );
 		} else {
 			return $default;
 		}
@@ -111,9 +112,9 @@ class QRLiteFunctions {
 	 * @param $obj
 	 * @return string
 	 */
-	public static function toJSON($obj) {
-		header('Content-Type: application/json');
-		echo json_encode($obj, JSON_PRETTY_PRINT);
+	public static function toJSON( $obj ) {
+		header( 'Content-Type: application/json' );
+		echo json_encode( $obj, JSON_PRETTY_PRINT );
 		die();
 	}
 

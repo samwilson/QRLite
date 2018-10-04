@@ -4,5 +4,5 @@
 			"Fannon"
 		]
 	},
-	"idprovider-desc": "A MediaWiki extension that displays QR Codes without having to generate MediaWiki Images"
+	"qrlite-desc": "A MediaWiki extension that generates QRCodes in .png and .svg format on the fly."
 }

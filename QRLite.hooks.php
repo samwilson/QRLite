@@ -22,7 +22,7 @@ class QRLiteHooks {
 	}
 
 	/**
-	 * Wrapper for the {{#idprovider-increment parser function
+	 * Wrapper for the #qrlite parser function
 	 *
 	 * @param $parser
 	 * @param $main
