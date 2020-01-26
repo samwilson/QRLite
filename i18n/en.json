@@ -4,5 +4,5 @@
 			"Fannon"
 		]
 	},
-	"qrlite-desc": "A MediaWiki extension that generates QRCodes in .png and .svg format on the fly."
+	"qrlite-desc": "Generates QRCodes in .png or .svg format on-the-fly."
 }
