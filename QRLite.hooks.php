@@ -14,9 +14,8 @@ class QRLiteHooks {
 	 * See also http://www.mediawiki.org/wiki/Manual:Parser_functions
 	 */
 	public static function onParserFirstCallInit( &$parser ) {
-
 		// Register parser functions
-		$parser->setFunctionHook('qrlite', 'QRLiteHooks::qrliteFunctionHook');
+		$parser->setFunctionHook( 'qrlite', 'QRLiteHooks::qrliteFunctionHook' );
 
 		return true;
 	}
@@ -29,20 +28,19 @@ class QRLiteHooks {
 	 *
 	 * @return array
 	 */
-	public static function qrliteFunctionHook($parser, $main) {
-
-		$args = array_slice(func_get_args(), 2);
-		$params = self::extractOptions($args);
+	public static function qrliteFunctionHook( $parser, $main ) {
+		$args = array_slice( func_get_args(), 2 );
+		$params = self::extractOptions( $args );
 
 		// If the prefix is not set as key-value, but the first parameter is set
 		// Use it as prefix (short form)
-		if ($main) {
+		if ( $main ) {
 			$params['prefix'] = $main;
 		}
 
-		$id = QRLiteFunctions::generateQRCode($params);
+		$id = QRLiteFunctions::generateQRCode( $params );
 
-		return array($id, 'noparse' => true, 'isHTML' => true);
+		return [ $id, 'noparse' => true, 'isHTML' => true ];
 	}
 
 	/**
@@ -52,9 +50,8 @@ class QRLiteHooks {
 	 * @param array $options
 	 * @return array $results
 	 */
-	private static function extractOptions(array $options) {
-
-		$results = array();
+	private static function extractOptions( array $options ) {
+		$results = [];
 
 		foreach ( $options as $option ) {
 			$pair = explode( '=', $option, 2 );
