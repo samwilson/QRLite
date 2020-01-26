@@ -14,7 +14,6 @@ require_once "lib/phpqrcode/qrlib.php";
 class QRLiteFunctions {
 
 	public static function generateQRCode( $params = [] ) {
-
 		global $wgTmpDirectory;
 
 		// Defaults and escaping
@@ -73,7 +72,8 @@ class QRLiteFunctions {
 			}
 		}
 		catch ( Exception $e ) {
-			$image = '<span class="error-message">' . $e->getMessage() . '</span>';;
+			$image = '<span class="error-message">' . $e->getMessage() . '</span>';
+
 		}
 
 		$downloadButtons = '';
@@ -81,8 +81,6 @@ class QRLiteFunctions {
 
 		return $result;
 	}
-
-
 
 	//////////////////////////////////////////
 	// HELPER FUNCTIONS                     //
@@ -94,7 +92,7 @@ class QRLiteFunctions {
 	 *
 	 * @param array $params
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed|null $default
 	 *
 	 * @return mixed
 	 */

@@ -17,7 +17,6 @@ if ( php_sapi_name() == "cli" ) {
 	wfDebugLog( 'QRLite', "[QRLite] Skipping in CLI Mode" );
 }
 
-
 if ( function_exists( 'wfLoadExtension' ) ) {
 
 	wfLoadExtension( 'QRLite' );
@@ -28,7 +27,6 @@ if ( function_exists( 'wfLoadExtension' ) ) {
 	wfWarn( 'Deprecated PHP entry point used for the QRLite extension. Please use wfLoadExtension("QRLite"); instead, ' .
 			'see https://www.mediawiki.org/wiki/Extension_registration for more details.' );
 	return;
-
 
 } else {
 
