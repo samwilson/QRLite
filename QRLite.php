@@ -13,8 +13,8 @@
 
 // Don't run in CLI mode (maintenance scripts)
 if ( php_sapi_name() == "cli" ) {
-	return false;
 	wfDebugLog( 'QRLite', "[QRLite] Skipping in CLI Mode" );
+	return false;
 }
 
 if ( function_exists( 'wfLoadExtension' ) ) {

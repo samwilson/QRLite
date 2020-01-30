@@ -7,7 +7,6 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingParamName" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
 		<exclude name="Generic.PHP.SAPIUsage.FunctionFound" />
-		<exclude name="Squiz.PHP.NonExecutableCode.Unreachable" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
 	</rule>
 	<file>.</file>
